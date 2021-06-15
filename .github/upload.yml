@@ -1,0 +1,19 @@
+# Upload Static Assets to web-enabled static store
+
+name: Deploy Assets to Web
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  upload-assets:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      
+      - name: Upload Assets CLI
+        run: |
+          az storage blob upload-batch -d '$web' -s ./assets --connection-string '${{secrets.STORAGE_CONNSTRING}}'
